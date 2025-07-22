@@ -1,259 +1,330 @@
+<!-- SnapBox Live with Floating Social Share Buttons -->
 <!DOCTYPE html>
 <html lang="en" class="bg-black text-white">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SnapBox Live</title>
+  <link rel="icon" href="assets/logo.png" />
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
-    .popup-box, .msg-box, .challenge-box {
-      background: white;
-      color: black;
+    body { font-family: 'Lexend', sans-serif; }
+
+    .btn-glow {
+      background-color: #f0f002; color: black;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .btn-glow:hover {
+      background-color: white; color: black;
+      box-shadow: 0 0 10px #f0f002, 0 0 20px #f0f002;
+    }
+
+    .btn-reset {
+      background-color: #ef4444;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .popup-box {
+      background: white; color: black;
       padding: 2rem;
       border-radius: 1rem;
-      width: 90%;
-      max-width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
       text-align: center;
-      font-weight: 600;
     }
-    .blurred-socials {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 40;
-      filter: blur(2px);
-    }
-    .btn-glow, .btn-reset {
-      background: #f0f002;
-      color: black;
-      padding: 0.5rem 1rem;
-      border-radius: 1rem;
+
+    .msg-box {
+      background: #22c55e;
+      color: white;
+      font-size: 1.25rem;
       font-weight: bold;
-      box-shadow: 0 0 10px #f0f002;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .preview-ring { animation: spin 3s linear infinite; }
+    .stopped { animation: none !important; }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .preview-box {
+      border: 4px solid #f0f002; background: #f0f002;
+      width: 100px; height: 160px;
+      border-radius: 0.5rem; display: flex;
+      align-items: center; justify-content: center;
+      background-size: cover; background-position: center;
+      position: relative; font-weight: bold; color: #000;
+    }
+
+    .camera-icon {
+      position: absolute; bottom: 5px; right: 5px;
+      background: #fff; border-radius: 50%; padding: 4px;
+    }
+
+    #camera { transform: scaleX(-1); border-radius: 1rem; }
+
+    /* Floating Social Share Buttons */
+    .social-buttons {
+      position: fixed;
+      right: 20px;
+      top: 40%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      z-index: 1000;
+    }
+
+    .social-buttons button {
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .social-buttons button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+    }
+
+    .whatsapp { background-color: #16d900; }
+    .facebook { background-color: #0074e0; }
+    .snapchat { background-color: #f0f002; }
+    .snapchat i { color: black !important; }
+    .instagram {
+      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
     }
   </style>
 </head>
+
 <body class="flex flex-col items-center justify-center min-h-screen px-4">
-  <!-- Popups -->
-  <div id="welcomePopup" class="fixed inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-md bg-black/40">
-    <img src="assets/logo.png" class="w-16 mb-4" />
+
+  <!-- Welcome Popup -->
+  <div id="welcomePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
     <div class="popup-box">Welcome! to Snapchat new feature Snapbox 👻</div>
-    <div class="blurred-socials flex gap-4 mt-6">
-      <a id="shareWhatsApp" href="#"><i class="fa-brands fa-whatsapp text-green-400 text-2xl"></i></a>
-      <a id="shareFacebook" href="#"><i class="fa-brands fa-facebook text-blue-500 text-2xl"></i></a>
-      <a id="shareInstagram" href="#"><i class="fa-brands fa-instagram text-pink-500 text-2xl"></i></a>
-      <a id="shareTwitter" href="#"><i class="fa-brands fa-x-twitter text-white text-2xl"></i></a>
+  </div>
+
+  <!-- Name Input -->
+  <div id="namePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 hidden">
+    <div class="bg-white text-black text-center text-base font-light px-6 py-6 w-72 h-48 rounded-xl shadow-xl flex flex-col items-center justify-center gap-4">
+      <span>Enter your name</span>
+      <input id="nameInput" type="text" placeholder="Your name" class="px-3 py-2 border rounded w-full text-black" />
+      <button onclick="submitName()" class="bg-[#f0f002] px-4 py-1 rounded font-bold text-black">Start</button>
     </div>
-  </div>
-
-  <div id="namePopup" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-md bg-black/40">
-    <img src="assets/logo.png" class="w-16 mb-4" />
-    <div class="popup-box">
-      <input id="userName" type="text" placeholder="Enter your name" class="border border-gray-400 p-2 w-full mb-4 rounded" />
-      <input id="userPass" type="password" placeholder="Enter your password" class="border border-gray-400 p-2 w-full rounded" />
-      <button onclick="submitName()" class="btn-glow mt-4">Continue</button>
-    </div>
-  </div>
-
-  <div id="challengePopup" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-md bg-black/40">
-    <img src="assets/logo.png" class="w-16 mb-4" />
-    <div class="challenge-box"><span id="sharedUser" class="font-bold">Your Friend</span> challenged you to click 4 selfies in 10 seconds</div>
-    <button onclick="startChallenge()" class="btn-glow mt-4">Start Now</button>
-  </div>
-
-  <div id="failPopup" class="hidden fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
-    <div class="popup-box">
-      Oo you couldn't complete the challenge on time
-      <button onclick="retryChallenge()" class="btn-reset mt-4">Try Again</button>
-    </div>
-  </div>
-
-  <div id="cameraDenyPopup" class="hidden fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
-    <div class="popup-box">Please allow camera permission to click selfies</div>
   </div>
 
   <!-- Main App -->
   <div id="mainContainer" class="filter blur-md pointer-events-none transition duration-500 w-full flex flex-col items-center justify-center">
-    <div class="absolute top-4 left-4 z-50">
+    <div class="absolute top-4 left-4 z-50 flex flex-col items-center gap-1">
       <div class="w-12 h-12 p-1 rounded-full bg-gradient-to-tr from-purple-700 to-pink-500">
         <div class="bg-white w-full h-full rounded-full flex items-center justify-center">
           <i data-lucide="user" class="w-5 h-5 text-black"></i>
         </div>
       </div>
+      <span id="userName" class="text-sm font-semibold text-[#f0f002]"></span>
     </div>
+
     <button onclick="toggleTheme()" class="absolute top-4 right-4 p-3 rounded-full bg-gray-800 text-white flex items-center justify-center">
       <i data-lucide="sun"></i>
     </button>
+
     <div class="flex flex-col items-center mb-2 mt-4">
       <img src="assets/logo.png" class="w-24 animate-bounce" />
       <h1 class="text-xl text-[#f0f002] font-bold tracking-wide mt-2">SnapBox</h1>
     </div>
+
     <div class="mb-5 border-4 rounded-2xl overflow-hidden" style="border-color:#f0f002">
       <video id="camera" autoplay playsinline class="w-64 h-96 object-cover shadow-xl"></video>
     </div>
-    <button onclick="manualCapture()" class="btn-glow"> <i data-lucide="camera" class="w-5 h-5"></i> Capture </button>
+
+    <button onclick="manualCapture()" class="btn-glow">
+      <i data-lucide="camera" class="w-5 h-5"></i> Capture
+    </button>
+
     <div id="previewBoxes" class="grid grid-cols-2 gap-4 mb-6">
       <div class="preview-ring"><div class="preview-box">Tap 1<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
       <div class="preview-ring"><div class="preview-box">Tap 2<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
       <div class="preview-ring"><div class="preview-box">Tap 3<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
       <div class="preview-ring"><div class="preview-box">Tap 4<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
     </div>
+
     <div class="flex gap-4 mb-6">
-      <button onclick="downloadAllPhotos()" class="btn-glow"><i data-lucide="download" class="w-5 h-5"></i> Download</button>
-      <button onclick="resetAll()" class="btn-reset"><i data-lucide="rotate-ccw" class="w-5 h-5"></i> Reset</button>
+      <button onclick="downloadAllPhotos()" class="btn-glow">
+        <i data-lucide="download" class="w-5 h-5"></i> Download
+      </button>
+      <button onclick="resetAll()" class="btn-reset">
+        <i data-lucide="rotate-ccw" class="w-5 h-5"></i> Reset
+      </button>
     </div>
+
+    <!-- WhatsApp Share -->
+    <a id="whatsappShare" target="_blank"
+       class="fixed bottom-20 right-20 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl flex items-center justify-center">
+      <i data-lucide="send" class="w-5 h-5"></i>
+    </a>
+
     <div id="msg" class="hidden fixed inset-0 flex items-center justify-center z-50">
       <div class="msg-box">🎉 Congratulations! You won the task!</div>
     </div>
+
     <div class="fab-chat"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
     <canvas id="canvas" class="hidden"></canvas>
   </div>
-  <script src="js/script.js"></script>
+
+  <!-- Social Share Buttons -->
+  <div class="social-buttons">
+    <button class="whatsapp" onclick="window.open('https://wa.me/?text=Check%20this%20out!', '_blank')">
+      <i class="fab fa-whatsapp"></i>
+    </button>
+    <button class="instagram" onclick="window.open('https://instagram.com', '_blank')">
+      <i class="fab fa-instagram"></i>
+    </button>
+    <button class="snapchat" onclick="window.open('https://snapchat.com', '_blank')">
+      <i class="fab fa-snapchat-ghost"></i>
+    </button>
+    <button class="facebook" onclick="window.open('https://facebook.com', '_blank')">
+      <i class="fab fa-facebook-f"></i>
+    </button>
+  </div>
+
   <script>
+    lucide.createIcons();
+    let userName = "", currentIndex = 0;
+    const capturedImages = [];
 
-    // Utility Functions
-function $(id) {
-  return document.getElementById(id);
-}
-
-function show(id) {
-  $(id).classList.remove("hidden");
-}
-
-function hide(id) {
-  $(id).classList.add("hidden");
-}
-
-// INITIAL FLOW
-window.onload = function () {
-  setTimeout(() => {
-    hide("welcomePopup");
-    show("namePopup");
-  }, 2500);
-
-  // Share links setup
-  const currentLink = encodeURIComponent(window.location.href);
-  $("shareWhatsApp").href = `https://wa.me/?text=Click%20your%20SnapBox%20selfie%20now!%20👻%20${currentLink}`;
-  $("shareFacebook").href = `https://www.facebook.com/sharer/sharer.php?u=${currentLink}`;
-  $("shareInstagram").href = `https://www.instagram.com/?url=${currentLink}`;
-  $("shareTwitter").href = `https://twitter.com/intent/tweet?text=Click%20your%20SnapBox%20selfie%20now!%20👻%20${currentLink}`;
-};
-
-// Name and Password Submit
-let userName = "";
-function submitName() {
-  const name = $("userName").value.trim();
-  const pass = $("userPass").value.trim();
-  if (name === "" || pass === "") {
-    alert("Please enter both name and password");
-    return;
-  }
-  userName = name;
-  hide("namePopup");
-
-  $("sharedUser").innerText = userName;
-  show("challengePopup");
-}
-
-// Challenge Logic
-let selfieCount = 0;
-let challengeTimer;
-function startChallenge() {
-  hide("challengePopup");
-
-  // Start 10-sec timer
-  selfieCount = 0;
-  challengeTimer = setTimeout(() => {
-    if (selfieCount < 4) {
-      show("failPopup");
+    function toPascalCase(str) {
+      return str.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
     }
-  }, 10000);
 
-  // Request camera permission after challenge popup
-  askCameraPermission();
-}
+    function submitName() {
+      const input = document.getElementById("nameInput").value.trim();
+      if (!input) return alert("Please enter your name");
 
-// Camera Permission Handler
-function askCameraPermission() {
-  navigator.mediaDevices
-    .getUserMedia({ video: true })
-    .then((stream) => {
-      $("camera").srcObject = stream;
-      $("mainContainer").classList.remove("blur-md", "pointer-events-none");
-    })
-    .catch(() => {
-      show("cameraDenyPopup");
+      userName = toPascalCase(input);
+      document.getElementById("userName").innerText = userName;
+
+      const link = "https://snapbox-selfie.github.io/snapchat/";
+      const msg = `${userName} sent you Snapchat new features Snapbox-Selfie 👻\nClick here 👉 ${link}`;
+      const whatsappLink = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+      document.getElementById("whatsappShare").href = whatsappLink;
+
+      document.getElementById("namePopup").classList.add("hidden");
+      const main = document.getElementById("mainContainer");
+      main.classList.remove("blur-md", "pointer-events-none");
+
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+        .then((stream) => {
+          document.getElementById("camera").srcObject = stream;
+        }).catch((err) => {
+          alert("Camera access failed");
+          console.error(err);
+        });
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      html.classList.toggle("bg-black");
+      html.classList.toggle("text-white");
+      html.classList.toggle("bg-white");
+      html.classList.toggle("text-black");
+    }
+
+    function capturePhoto(auto = false) {
+      const video = document.getElementById('camera');
+      const canvas = document.getElementById('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.translate(canvas.width, 0); ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      const dataUrl = canvas.toDataURL('image/jpeg');
+      const blob = dataURLtoBlob(dataUrl);
+
+      if (!auto && currentIndex < 4) {
+        const box = document.querySelectorAll('.preview-box')[currentIndex];
+        box.style.backgroundImage = `url(${dataUrl})`;
+        box.innerText = '';
+        capturedImages.push(blob);
+        currentIndex++;
+
+        if (currentIndex === 4) {
+          const msg = document.getElementById('msg');
+          msg.classList.remove('hidden');
+          setTimeout(() => msg.classList.add('hidden'), 3000);
+          document.querySelectorAll('.preview-ring').forEach(el => el.classList.add('stopped'));
+        }
+      }
+    }
+
+    function manualCapture() {
+      capturePhoto(false);
+    }
+
+    function downloadAllPhotos() {
+      if (capturedImages.length < 1) return alert("Capture photos first!");
+      capturedImages.forEach((blob, i) => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `selfie_${i + 1}.jpg`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    function resetAll() {
+      currentIndex = 0;
+      capturedImages.length = 0;
+      document.querySelectorAll('.preview-box').forEach((box, i) => {
+        box.style.backgroundImage = '';
+        box.innerText = `Tap ${i + 1}`;
+      });
+      document.getElementById('msg').classList.add('hidden');
+      document.querySelectorAll('.preview-ring').forEach(el => el.classList.remove('stopped'));
+    }
+
+    function dataURLtoBlob(dataurl) {
+      const parts = dataurl.split(','), mime = parts[0].match(/:(.*?);/)[1];
+      const bstr = atob(parts[1]); let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) u8arr[n] = bstr.charCodeAt(n);
+      return new Blob([u8arr], { type: mime });
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("welcomePopup").remove();
+        document.getElementById("namePopup").classList.remove("hidden");
+      }, 3000);
     });
-}
-
-// Retry Logic
-function retryChallenge() {
-  hide("failPopup");
-  resetAll();
-  show("challengePopup");
-}
-
-// Capture Selfie Logic
-function manualCapture() {
-  if (selfieCount >= 4) return;
-
-  const video = $("camera");
-  const canvas = $("canvas");
-  const ctx = canvas.getContext("2d");
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-  ctx.drawImage(video, 0, 0);
-
-  const dataURL = canvas.toDataURL("image/png");
-  const box = document.querySelectorAll(".preview-box")[selfieCount];
-  box.innerHTML = `<img src="${dataURL}" class="w-full h-full object-cover"/>`;
-
-  selfieCount++;
-
-  if (selfieCount === 4) {
-    clearTimeout(challengeTimer);
-    show("msg");
-    setTimeout(() => {
-      hide("msg");
-    }, 3000);
-  }
-}
-
-// Reset All Logic
-function resetAll() {
-  document.querySelectorAll(".preview-box").forEach((box, i) => {
-    box.innerHTML = `Tap ${i + 1}<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div>`;
-  });
-  selfieCount = 0;
-}
-
-// Theme Toggle
-function toggleTheme() {
-  document.documentElement.classList.toggle("bg-white");
-  document.documentElement.classList.toggle("text-black");
-  document.documentElement.classList.toggle("bg-black");
-  document.documentElement.classList.toggle("text-white");
-}
-
-// Download All
-function downloadAllPhotos() {
-  document.querySelectorAll(".preview-box img").forEach((img, i) => {
-    const a = document.createElement("a");
-    a.href = img.src;
-    a.download = `selfie_${i + 1}.png`;
-    a.click();
-  });
-}
-
-// Lucide Icons Init
-window.addEventListener("DOMContentLoaded", () => {
-  lucide.createIcons();
-});
   </script>
 </body>
 </html>
