@@ -43,13 +43,23 @@
       transition: all 0.3s ease;
     }
 
-    .popup-box {
-      background: white; color: black;
-      padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      text-align: center;
-    }
+.popup-box {
+  background: white;
+  color: black;
+  width: 200px;
+  height: 200px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  box-sizing: border-box;
+  padding: 1rem;
+}
 
     .msg-box {
       background: #22c55e;
@@ -127,9 +137,13 @@
 <body class="flex flex-col items-center justify-center min-h-screen px-4">
 
   <!-- Welcome Popup -->
-  <div id="welcomePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
-    <div class="popup-box">Welcome! to Snapchat new feature Snapbox 👻</div>
+<!-- Welcome Popup -->
+<div id="welcomePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
+  <div class="popup-box flex flex-col items-center justify-center gap-4">
+    <img src="assets/logo.png" class="w-16"  />
+    <div>Welcome! to Snapchat new feature Snapbox 👻</div>
   </div>
+</div>
 
   <!-- Name Input -->
   <div id="namePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 hidden">
