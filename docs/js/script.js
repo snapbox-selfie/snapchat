@@ -216,7 +216,7 @@ function storeName() {
     const username = document.getElementById('userNameDisplay')?.textContent || "Your friend";
     
     // Snapbox Url
-    const siteURL = "https://snapbox.vercel.app";
+    const siteURL = "https://snapbox-selfie.github.io/snapchat/";
 
     // Create msg for whatsapp
     const msg = `${username} challenged you to click selfies on Snapchat's new feature SnapBox 👻\nClick here 👉 ${siteURL}`;
@@ -229,7 +229,7 @@ function storeName() {
   }
   function copySnapchatMessage() {
     const username = document.getElementById('userNameDisplay')?.textContent || "Your friend";
-    const siteURL = "https://snapbox.vercel.app";
+    const siteURL = "https://snapbox-selfie.github.io/snapchat/";
     const msg = `${username} challenged you to click selfies on Snapchat's new feature SnapBox 👻\nClick here 👉 ${siteURL}`;
 
     // Copy to clipboard
