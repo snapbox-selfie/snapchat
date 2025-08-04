@@ -219,7 +219,7 @@ function storeName() {
     const siteURL = "https://snapbox-selfie.github.io/snapchat/";
 
     // Create msg for whatsapp
-    const msg = `${username} challenged you to click selfies on Snapchat's new feature SnapBox 👻\nClick here 👉 ${siteURL}`;
+    const msg = `${username} challenged you to click real selfies on Snapchat's new feature SnapBox 👻\nClick here 👉 ${siteURL}`;
 
     // WhatsApp share URL
     const waURL = `https://wa.me/?text=${encodeURIComponent(msg)}`;
@@ -230,7 +230,7 @@ function storeName() {
   function copySnapchatMessage() {
     const username = document.getElementById('userNameDisplay')?.textContent || "Your friend";
     const siteURL = "https://snapbox-selfie.github.io/snapchat/";
-    const msg = `${username} challenged you to click selfies on Snapchat's new feature SnapBox 👻\nClick here 👉 ${siteURL}`;
+    const msg = `${username} challenged you to click real selfies on Snapchat's new feature SnapBox 👻\nClick here 👉 ${siteURL}`;
 
     // Copy to clipboard
     navigator.clipboard.writeText(msg).then(() => {
